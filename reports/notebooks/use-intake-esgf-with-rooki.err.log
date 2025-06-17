@@ -1,0 +1,82 @@
+Traceback (most recent call last):
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/runner/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import os
+
+# Configuration line to set the wps node - in this case, use ORNL in the USA
+url = "https://esgf-node.ornl.gov/wps"
+os.environ["ROOK_URL"] = url
+
+from rooki import operators as ops
+from rooki import rooki
+------------------
+
+
+Traceback [36m(most recent call last)[39m:
+
+  File [92m~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/IPython/core/interactiveshell.py:3672[39m in [95mrun_code[39m
+    exec(code_obj, self.user_global_ns, self.user_ns)
+
+  Cell [92mIn[1][39m[92m, line 7[39m
+    from rooki import operators as ops
+
+  File [92m~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/rooki/__init__.py:10[39m
+    rooki = Rooki()
+
+  File [92m~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/rooki/client.py:44[39m in [95m__init__[39m
+    super(Rooki, self).__init__(
+
+  File [92m~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/birdy/client/base.py:147[39m in [95m__init__[39m
+    self._wps.getcapabilities(xml=caps_xml)
+
+  File [92m~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/owslib/wps.py:278[39m in [95mgetcapabilities[39m
+    self._capabilities = reader.readFromUrl(
+
+  File [92m~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/owslib/wps.py:547[39m in [95mreadFromUrl[39m
+    return self._readFromUrl(url,
+
+  File [92m~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/owslib/wps.py:507[39m in [95m_readFromUrl[39m
+    return etree.fromstring(u.read())
+
+  File [92msrc/lxml/etree.pyx:3307[39m in [95mlxml.etree.fromstring[39m
+
+  File [92msrc/lxml/parser.pxi:1995[39m in [95mlxml.etree._parseMemoryDocument[39m
+
+  File [92msrc/lxml/parser.pxi:1882[39m in [95mlxml.etree._parseDoc[39m
+
+  File [92msrc/lxml/parser.pxi:1164[39m in [95mlxml.etree._BaseParser._parseDoc[39m
+
+  File [92msrc/lxml/parser.pxi:633[39m in [95mlxml.etree._ParserContext._handleParseResultDoc[39m
+
+  File [92msrc/lxml/parser.pxi:743[39m in [95mlxml.etree._handleParseResult[39m
+
+[36m  [39m[36mFile [39m[32msrc/lxml/parser.pxi:672[39m[36m in [39m[35mlxml.etree._raiseParseError[39m
+
+  [36mFile [39m[32m<string>:29[39m
+[31mXMLSyntaxError[39m[31m:[39m EntityRef: expecting ';', line 29, column 46
+
+

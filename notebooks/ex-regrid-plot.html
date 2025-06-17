@@ -1,0 +1,1168 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo: Regridding and Plotting with Rooki and Cartopy &#8212; My Jupyter Book</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.4cbf315f70debaebd550c87a6162cf0f.min.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Complex Searching with intake and analysing employing xarray" href="complex-search2-and-analysis.html" />
+    <link rel="prev" title="Compute Demo: ENSO nonlinearity index with CMIP6 data" href="rooki_enso_nonlinear.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">My Jupyter Book</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../README.html">
+   ESGF Cookbook
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preamble
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="how-to-cite.html">
+   How to Cite This Cookbook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="running-on-nimbus.html">
+   Running Notebooks on Nimbus
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Searching
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro-search.html">
+   Introduction to
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     intake-esgf
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="complex-search.html">
+   Complex Searching with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     intake-esgf
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rooki.html">
+   Compute Demo: Use Rooki to access CMIP6 data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="use-intake-esgf-with-rooki.html">
+   Using intake-esgf with rooki
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Workflows
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="rooki_enso_nonlinear.html">
+   Compute Demo: ENSO nonlinearity index with CMIP6 data
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Demo: Regridding and Plotting with Rooki and Cartopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="complex-search2-and-analysis.html">
+   Complex Searching with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     intake
+    </span>
+   </code>
+   and analysing employing
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     xarray
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/notebooks/ex-regrid-plot.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prerequisites">
+   Prerequisites
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-1-regrid-two-cmip6-models-onto-the-same-grid">
+   Example 1: Regrid two CMIP6 models onto the same grid
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#access-the-desired-datasets-using-intake-esgf-and-rooki">
+     Access the desired datasets using intake-esgf and rooki
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compare-the-precipitation-data-between-models">
+     Compare the precipitation data between models
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regrid-the-models-onto-the-same-grid-with-rooki">
+     Regrid the models onto the same grid with Rooki
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quick-plot-the-before-and-after-for-each-model">
+     Quick plot the before and after for each model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#take-the-difference-between-precipitation-datasets-and-plot-it">
+       Take the difference between precipitation datasets and plot it
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-everything-together">
+     Plot everything together
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-2-coarsen-the-output-for-one-model">
+   Example 2: Coarsen the output for one model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-the-data-using-intake-esgf-and-rooki-again">
+     Get the data using intake-esgf and Rooki again
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-each-dataset-to-look-at-the-coarsened-grids">
+     Plot each dataset to look at the coarsened grids
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-the-coarsened-datsets-together-using-cartopy">
+     Plot the coarsened datsets together using Cartopy
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources-and-references">
+   Resources and references
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Demo: Regridding and Plotting with Rooki and Cartopy</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prerequisites">
+   Prerequisites
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-1-regrid-two-cmip6-models-onto-the-same-grid">
+   Example 1: Regrid two CMIP6 models onto the same grid
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#access-the-desired-datasets-using-intake-esgf-and-rooki">
+     Access the desired datasets using intake-esgf and rooki
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compare-the-precipitation-data-between-models">
+     Compare the precipitation data between models
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regrid-the-models-onto-the-same-grid-with-rooki">
+     Regrid the models onto the same grid with Rooki
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quick-plot-the-before-and-after-for-each-model">
+     Quick plot the before and after for each model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#take-the-difference-between-precipitation-datasets-and-plot-it">
+       Take the difference between precipitation datasets and plot it
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-everything-together">
+     Plot everything together
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-2-coarsen-the-output-for-one-model">
+   Example 2: Coarsen the output for one model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-the-data-using-intake-esgf-and-rooki-again">
+     Get the data using intake-esgf and Rooki again
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-each-dataset-to-look-at-the-coarsened-grids">
+     Plot each dataset to look at the coarsened grids
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-the-coarsened-datsets-together-using-cartopy">
+     Plot the coarsened datsets together using Cartopy
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources-and-references">
+   Resources and references
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <p><img src="images/esgf.png" width=250 alt="ESGF logo"></img>
+<img src="images/logos/rooki_logo.png" width=125 alt="Rooki logo"></img>
+<img src="images/logos/cartopy_logo.png" width=250 alt="Cartopy logo"></img></p>
+<div class="tex2jax_ignore mathjax_ignore section" id="demo-regridding-and-plotting-with-rooki-and-cartopy">
+<h1>Demo: Regridding and Plotting with Rooki and Cartopy<a class="headerlink" href="#demo-regridding-and-plotting-with-rooki-and-cartopy" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, we demonstrate how to use Rooki to regrid CMIP model data and plot it in Cartopy for two examples:</p>
+<ol class="arabic simple">
+<li><p>Regrid two CMIP models onto the same grid</p></li>
+<li><p>Coarsen the output for one model</p></li>
+</ol>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Concepts</p></th>
+<th class="head"><p>Importance</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://projectpythia.org/esgf-cookbook/notebooks/intro-search.html">Intro to intake-esgf</a></p></td>
+<td><p>Necessary</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/cartopy/cartopy.html">Intro to Cartopy</a></p></td>
+<td><p>Necessary</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://projectpythia.org/esgf-cookbook/notebooks/rooki.html">Using Rooki to access CMIP6 data</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Familiarity with rooki</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/data-formats/netcdf-cf.html">Understanding of NetCDF</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Familiarity with metadata structure</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><strong>Time to learn</strong>: 15 minutes</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">intake_esgf</span>
+
+<span class="c1"># Run this on the DKRZ node in Germany, using the ESGF1 index node at LLNL</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROOK_URL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;http://rook.dkrz.de/wps&quot;</span>
+<span class="n">intake_esgf</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;anl-dev&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="s2">&quot;ornl-dev&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="s2">&quot;esgf-node.llnl.gov&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rooki.operators</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ops</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcolors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.feature</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cfeature</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">intake_esgf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">intake_esgf</span><span class="w"> </span><span class="kn">import</span> <span class="n">ESGFCatalog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rooki</span><span class="w"> </span><span class="kn">import</span> <span class="n">rooki</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1.inset_locator</span><span class="w"> </span><span class="kn">import</span> <span class="n">inset_axes</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="example-1-regrid-two-cmip6-models-onto-the-same-grid">
+<h2>Example 1: Regrid two CMIP6 models onto the same grid<a class="headerlink" href="#example-1-regrid-two-cmip6-models-onto-the-same-grid" title="Permalink to this headline">¶</a></h2>
+<p>In this example, we want to compare the historical precipitation output between two CMIP models, CESM2 and CanESM5. Here will will look at the annual mean precipitation for 2010.</p>
+<div class="section" id="access-the-desired-datasets-using-intake-esgf-and-rooki">
+<h3>Access the desired datasets using intake-esgf and rooki<a class="headerlink" href="#access-the-desired-datasets-using-intake-esgf-and-rooki" title="Permalink to this headline">¶</a></h3>
+<p>The function and workflow to read in CMPI6 data using <code class="docutils literal notranslate"><span class="pre">intake-esgf</span></code> and <code class="docutils literal notranslate"><span class="pre">rooki</span></code> in the next few cells are adapted from <a class="reference external" href="https://github.com/ProjectPythia/esgf-cookbook/blob/cf69015a464b68ee28cfdd4a27cee4e9d6ca2ca9/notebooks/use-intake-esgf-with-rooki.ipynb">intake-esgf-with-rooki.ipynb</a>. Essentially, we use <code class="docutils literal notranslate"><span class="pre">intake-esgf</span></code> to find the dataset IDs we want and then subset and average them using <code class="docutils literal notranslate"><span class="pre">rooki</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">separate_dataset_id</span><span class="p">(</span><span class="n">id_list</span><span class="p">):</span>
+    <span class="n">rooki_id</span> <span class="o">=</span> <span class="n">id_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">rooki_id</span> <span class="o">=</span> <span class="n">rooki_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1">#rooki_id = f&quot;css03_data.{rooki_id}&quot;  # &lt;-- just something you have to know for now :(</span>
+    <span class="k">return</span> <span class="n">rooki_id</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">=</span> <span class="n">ESGFCatalog</span><span class="p">()</span>
+<span class="n">cat</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+        <span class="n">activity_id</span><span class="o">=</span><span class="s1">&#39;CMIP&#39;</span><span class="p">,</span>
+        <span class="n">experiment_id</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;historical&quot;</span><span class="p">,],</span>
+        <span class="n">variable_id</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pr&quot;</span><span class="p">],</span>
+        <span class="n">member_id</span><span class="o">=</span><span class="s1">&#39;r1i1p1f1&#39;</span><span class="p">,</span>
+        <span class="n">grid_label</span><span class="o">=</span><span class="s1">&#39;gn&#39;</span><span class="p">,</span>
+        <span class="n">table_id</span><span class="o">=</span><span class="s2">&quot;Amon&quot;</span><span class="p">,</span>
+        <span class="n">source_id</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;CESM2&quot;</span><span class="p">,</span> <span class="s2">&quot;CanESM5&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="n">dsets</span> <span class="o">=</span> <span class="p">[</span><span class="n">separate_dataset_id</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
+<span class="n">dsets</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "d5ab2551bde9431faf0170f1774a60ae"}</script><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">IndexError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/multiprocessing/pool.py:856,</span> in <span class="ni">IMapIterator.next</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">855</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">856</span>     <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">857</span> <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+
+<span class="ne">IndexError</span>: pop from an empty deque
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">cat</span> <span class="o">=</span> <span class="n">ESGFCatalog</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">cat</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>         <span class="n">activity_id</span><span class="o">=</span><span class="s1">&#39;CMIP&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>         <span class="n">experiment_id</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;historical&quot;</span><span class="p">,],</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>         <span class="n">variable_id</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pr&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="n">member_id</span><span class="o">=</span><span class="s1">&#39;r1i1p1f1&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="n">grid_label</span><span class="o">=</span><span class="s1">&#39;gn&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="n">table_id</span><span class="o">=</span><span class="s2">&quot;Amon&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="n">source_id</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;CESM2&quot;</span><span class="p">,</span> <span class="s2">&quot;CanESM5&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">dsets</span> <span class="o">=</span> <span class="p">[</span><span class="n">separate_dataset_id</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">dsets</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/intake_esgf/catalog.py:354,</span> in <span class="ni">ESGFCatalog.search</span><span class="nt">(self, quiet, file_start, file_end, **search)</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span> <span class="n">search_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">353</span> <span class="n">dfs</span> <span class="o">=</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">))</span><span class="o">.</span><span class="n">imap_unordered</span><span class="p">(</span><span class="n">_search</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">354</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">combine_results</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">355</span>     <span class="n">tqdm</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">356</span>         <span class="n">dfs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">357</span>         <span class="n">disable</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">358</span>         <span class="n">bar_format</span><span class="o">=</span><span class="n">base</span><span class="o">.</span><span class="n">bar_format</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">359</span>         <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">360</span>         <span class="n">unit_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">361</span>         <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Searching indices&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">362</span>         <span class="n">ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">363</span>         <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">364</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">366</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_project</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">368</span> <span class="c1"># even though we are using latest=True, because the search is distributed, we</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span> <span class="c1"># may have different versions from different indices.</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/intake_esgf/base.py:245,</span> in <span class="ni">combine_results</span><span class="nt">(dfs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">243</span> <span class="c1"># combine and remove duplicate entries</span>
+<span class="g g-Whitespace">    </span><span class="mi">244</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">intake_esgf</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">245</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span>     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[36;32msearch end </span><span class="se">\x1b</span><span class="s2">[91;20mno results</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/pandas/core/reshape/concat.py:382,</span> in <span class="ni">concat</span><span class="nt">(objs, axis, join, ignore_index, keys, levels, names, verify_integrity, sort, copy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">379</span> <span class="k">elif</span> <span class="n">copy</span> <span class="ow">and</span> <span class="n">using_copy_on_write</span><span class="p">():</span>
+<span class="g g-Whitespace">    </span><span class="mi">380</span>     <span class="n">copy</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="ne">--&gt; </span><span class="mi">382</span> <span class="n">op</span> <span class="o">=</span> <span class="n">_Concatenator</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">383</span>     <span class="n">objs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">384</span>     <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">385</span>     <span class="n">ignore_index</span><span class="o">=</span><span class="n">ignore_index</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">386</span>     <span class="n">join</span><span class="o">=</span><span class="n">join</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span>     <span class="n">keys</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">388</span>     <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">389</span>     <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">390</span>     <span class="n">verify_integrity</span><span class="o">=</span><span class="n">verify_integrity</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">391</span>     <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span>     <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">393</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">395</span> <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/pandas/core/reshape/concat.py:445,</span> in <span class="ni">_Concatenator.__init__</span><span class="nt">(self, objs, axis, join, keys, levels, names, ignore_index, verify_integrity, copy, sort)</span>
+<span class="g g-Whitespace">    </span><span class="mi">442</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify_integrity</span> <span class="o">=</span> <span class="n">verify_integrity</span>
+<span class="g g-Whitespace">    </span><span class="mi">443</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span> <span class="o">=</span> <span class="n">copy</span>
+<span class="ne">--&gt; </span><span class="mi">445</span> <span class="n">objs</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_keys_and_objs</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">447</span> <span class="c1"># figure out what our result ndim is going to be</span>
+<span class="g g-Whitespace">    </span><span class="mi">448</span> <span class="n">ndims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ndims</span><span class="p">(</span><span class="n">objs</span><span class="p">)</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/pandas/core/reshape/concat.py:504,</span> in <span class="ni">_Concatenator._clean_keys_and_objs</span><span class="nt">(self, objs, keys)</span>
+<span class="g g-Whitespace">    </span><span class="mi">502</span>     <span class="n">objs_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">objs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">503</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">504</span>     <span class="n">objs_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">objs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">506</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">objs_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">507</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No objects to concatenate&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/tqdm/notebook.py:250,</span> in <span class="ni">tqdm_notebook.__iter__</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span>     <span class="n">it</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">250</span>     <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span>         <span class="c1"># return super(tqdm...) will not catch exception</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span>         <span class="k">yield</span> <span class="n">obj</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span> <span class="c1"># NB: except ... [ as ...] breaks IPython async KeyboardInterrupt</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/site-packages/tqdm/std.py:1181,</span> in <span class="ni">tqdm.__iter__</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1178</span> <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span>
+<span class="g g-Whitespace">   </span><span class="mi">1180</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1181</span>     <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1182</span>         <span class="k">yield</span> <span class="n">obj</span>
+<span class="g g-Whitespace">   </span><span class="mi">1183</span>         <span class="c1"># Update and possibly print the progressbar.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1184</span>         <span class="c1"># Note: does not call self.update(1) for speed optimisation.</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/multiprocessing/pool.py:861,</span> in <span class="ni">IMapIterator.next</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">859</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">860</span>     <span class="k">raise</span> <span class="ne">StopIteration</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+<span class="ne">--&gt; </span><span class="mi">861</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">862</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">863</span>     <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+
+<span class="nn">File ~/micromamba/envs/esgf-cookbook-dev/lib/python3.11/threading.py:327,</span> in <span class="ni">Condition.wait</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">325</span> <span class="k">try</span><span class="p">:</span>    <span class="c1"># restore state no matter what (e.g., KeyboardInterrupt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">326</span>     <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">327</span>         <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">328</span>         <span class="n">gotit</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">329</span>     <span class="k">else</span><span class="p">:</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Subset the data to get the precipitation variable for 2010 and then average by time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dset_list</span> <span class="o">=</span> <span class="p">[[]]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dset_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dsets</span><span class="p">):</span>
+    <span class="n">wf</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">AverageByTime</span><span class="p">(</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">Subset</span><span class="p">(</span>
+            <span class="n">ops</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;pr&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">dset_id</span><span class="p">]),</span>
+            <span class="n">time</span><span class="o">=</span><span class="s1">&#39;2010/2010&#39;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">orchestrate</span><span class="p">()</span>
+
+    <span class="c1"># if it worked, add the dataset to our list</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+        <span class="n">dset_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">datasets</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        
+    <span class="c1"># if it failed, tell us why</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Print the dataset list to get an overview of the metadata structure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dset_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="compare-the-precipitation-data-between-models">
+<h3>Compare the precipitation data between models<a class="headerlink" href="#compare-the-precipitation-data-between-models" title="Permalink to this headline">¶</a></h3>
+<p>First, let’s quickly plot the 2010 annual mean precipitation for each model to see what we’re working with. Since precipitation values vary greatly in magnitude, using a log-normalized colormap makes the data easier to visualize.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">dset</span> <span class="ow">in</span> <span class="n">dset_list</span><span class="p">:</span>
+    <span class="n">dset</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">mcolors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Uncomment and run the following cell. If we try to take the difference outright, it fails!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pr_diff = dset_list[0].pr - dset_list[1].pr</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The models have different grids so we can’t directly subtract the data. We can use the <code class="docutils literal notranslate"><span class="pre">grid</span></code> attribute to get information on which grid each uses.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dset_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dset_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="regrid-the-models-onto-the-same-grid-with-rooki">
+<h3>Regrid the models onto the same grid with Rooki<a class="headerlink" href="#regrid-the-models-onto-the-same-grid-with-rooki" title="Permalink to this headline">¶</a></h3>
+<p>Look at the documentation on the <code class="docutils literal notranslate"><span class="pre">regrid</span></code> operator to see the available grid types and regrid methods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rooki.regrid<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we’ll do the same process as before to read in and subset the datasets with rooki, but now we <strong>regrid using <code class="docutils literal notranslate"><span class="pre">ops.Regrid</span></code> before averaging over time</strong>. In this example, we use <code class="docutils literal notranslate"><span class="pre">method=nearest_s2d</span></code> to regrid each model onto the target grid using a nearest neighbors method. The target grid is a 1.25° grid, specified by <code class="docutils literal notranslate"><span class="pre">grid='1pt25deg'</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rg_list</span> <span class="o">=</span> <span class="p">[[]]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dset_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dsets</span><span class="p">):</span>
+    <span class="n">wf</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">AverageByTime</span><span class="p">(</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">Regrid</span><span class="p">(</span>
+            <span class="n">ops</span><span class="o">.</span><span class="n">Subset</span><span class="p">(</span>
+                <span class="n">ops</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;pr&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">dset_id</span><span class="p">]),</span>
+                <span class="n">time</span><span class="o">=</span><span class="s1">&#39;2010/2010&#39;</span>
+            <span class="p">),</span>
+            <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest_s2d&#39;</span><span class="p">,</span>
+            <span class="n">grid</span><span class="o">=</span><span class="s1">&#39;1pt25deg&#39;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">orchestrate</span><span class="p">()</span>
+    
+    <span class="c1"># if it worked, add the regridded dataset to our list</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+        <span class="n">rg_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">datasets</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        
+    <span class="c1"># if it failed, tell us why</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+<p>Print the list of regridded datasets to get an overview of the metadata structure. Note how <code class="docutils literal notranslate"><span class="pre">lat</span></code> and <code class="docutils literal notranslate"><span class="pre">lon</span></code> are now the same and each dataset has additional attributes, including <code class="docutils literal notranslate"><span class="pre">grid_original</span></code> and <code class="docutils literal notranslate"><span class="pre">regrid_operation</span></code>, which all keep track of the regridding operations we just completed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">rg_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now they are on the same grid!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">rg_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rg_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="quick-plot-the-before-and-after-for-each-model">
+<h3>Quick plot the before and after for each model<a class="headerlink" href="#quick-plot-the-before-and-after-for-each-model" title="Permalink to this headline">¶</a></h3>
+<p>The plots largely look the same, as they should - with the nearest neighbors method, we are just shifting the precipitation data onto a different grid without averaging between grid cells.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dset_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">source_id</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="p">[</span><span class="n">dset_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rg_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]]:</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">mcolors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dset_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">source_id</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="p">[</span><span class="n">dset_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">rg_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]]:</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">mcolors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="take-the-difference-between-precipitation-datasets-and-plot-it">
+<h4>Take the difference between precipitation datasets and plot it<a class="headerlink" href="#take-the-difference-between-precipitation-datasets-and-plot-it" title="Permalink to this headline">¶</a></h4>
+<p>Now that both models are on the same grid, we can subtract the precipitation datasets and plot the difference!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr_diff</span> <span class="o">=</span> <span class="n">rg_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">rg_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">pr_diff</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;bwr&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-everything-together">
+<h3>Plot everything together<a class="headerlink" href="#plot-everything-together" title="Permalink to this headline">¶</a></h3>
+<p>Plot the regridded precipitation data as well as the difference between models on the same figure. We can use <code class="docutils literal notranslate"><span class="pre">Cartopy</span></code> to make it pretty. With <code class="docutils literal notranslate"><span class="pre">GridSpec</span></code>, we can also split up the figure and organize it to use the same colorbar for more than one panel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># specify the projection</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">Mollweide</span><span class="p">()</span>
+
+<span class="c1"># set up plots for each model</span>
+<span class="n">axpr_1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+<span class="n">axpr_2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+<span class="n">axdiff</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+
+<span class="c1"># axes where the colorbar will go </span>
+<span class="n">axcb_pr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> 
+<span class="n">axcb_diff</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">axcb_pr</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">axcb_diff</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># plot the precipitation for both models</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">axpr_1</span><span class="p">,</span> <span class="n">axpr_2</span><span class="p">]):</span>
+    <span class="n">ds_rg</span> <span class="o">=</span> <span class="n">rg_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">pcm</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ds_rg</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">ds_rg</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">ds_rg</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">norm</span><span class="o">=</span><span class="n">mcolors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3e-4</span><span class="p">),</span>
+                         <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+                       <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">ds_rg</span><span class="o">.</span><span class="n">parent_source_id</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">COASTLINE</span><span class="p">)</span>
+    
+<span class="c1"># now plot the difference</span>
+<span class="n">pcmd</span> <span class="o">=</span> <span class="n">axdiff</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">pr_diff</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">pr_diff</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">pr_diff</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;bwr&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">3e-4</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3e-4</span><span class="p">,</span>
+                         <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+                        <span class="p">)</span>
+<span class="n">axdiff</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{a}</span><span class="s2"> - </span><span class="si">{b}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">rg_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent_source_id</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">rg_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">parent_source_id</span><span class="p">))</span>
+<span class="n">axdiff</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">COASTLINE</span><span class="p">)</span>
+
+<span class="c1"># set the precipitation colorbar</span>
+<span class="n">axcb_pr_ins</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">axcb_pr</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;75%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">cbar_pr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pcm</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">axcb_pr_ins</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">cbar_pr</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{n}</span><span class="s2"> (</span><span class="si">{u}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">rg_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">long_name</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="n">rg_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+
+<span class="c1"># set the difference colorbar</span>
+<span class="n">axcb_diff_ins</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">axcb_diff</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">cbar_diff</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pcmd</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">axcb_diff_ins</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">cbar_diff</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;Difference (</span><span class="si">{u}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="n">pr_diff</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="example-2-coarsen-the-output-for-one-model">
+<h2>Example 2: Coarsen the output for one model<a class="headerlink" href="#example-2-coarsen-the-output-for-one-model" title="Permalink to this headline">¶</a></h2>
+<p>We can also use <code class="docutils literal notranslate"><span class="pre">Rooki</span></code> to regrid the data from one model onto a coarser grid. In this case, it may make more sense to use a conservative regridding method, which will conserve the physical fluxes between grid cells, rather than the nearest neighbors method we used in Example 1.</p>
+<div class="section" id="get-the-data-using-intake-esgf-and-rooki-again">
+<h3>Get the data using intake-esgf and Rooki again<a class="headerlink" href="#get-the-data-using-intake-esgf-and-rooki-again" title="Permalink to this headline">¶</a></h3>
+<p>In this example, we’ll look at the annual mean near-surface air temperature for CESM2 in 2010.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">=</span> <span class="n">ESGFCatalog</span><span class="p">()</span>
+<span class="n">cat</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+        <span class="n">activity_id</span><span class="o">=</span><span class="s1">&#39;CMIP&#39;</span><span class="p">,</span>
+        <span class="n">experiment_id</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;historical&quot;</span><span class="p">,],</span>
+        <span class="n">variable_id</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tas&quot;</span><span class="p">],</span>
+        <span class="n">member_id</span><span class="o">=</span><span class="s1">&#39;r1i1p1f1&#39;</span><span class="p">,</span>
+        <span class="n">grid_label</span><span class="o">=</span><span class="s1">&#39;gn&#39;</span><span class="p">,</span>
+        <span class="n">table_id</span><span class="o">=</span><span class="s2">&quot;Amon&quot;</span><span class="p">,</span>
+        <span class="n">source_id</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;CESM2&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="n">dsets</span> <span class="o">=</span> <span class="p">[</span><span class="n">separate_dataset_id</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
+<span class="n">dsets</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First, get the dataset with the original grid:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wf</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">AverageByTime</span><span class="p">(</span>
+    <span class="n">ops</span><span class="o">.</span><span class="n">Subset</span><span class="p">(</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;tas&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span>
+        <span class="n">time</span><span class="o">=</span><span class="s1">&#39;2010/2010&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">resp</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">orchestrate</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+    <span class="n">ds_og</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">datasets</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">.grid</span></code> attribute to get information on the native grid:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds_og</span><span class="o">.</span><span class="n">grid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The native grid is 0.9°x1.25°, so let’s try coarsening to a 1.25°x1.25° grid using the conservative method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wf</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">AverageByTime</span><span class="p">(</span>
+    <span class="n">ops</span><span class="o">.</span><span class="n">Regrid</span><span class="p">(</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">Subset</span><span class="p">(</span>
+            <span class="n">ops</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;tas&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span>
+            <span class="n">time</span><span class="o">=</span><span class="s1">&#39;2010/2010&#39;</span>
+        <span class="p">),</span>
+        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;conservative&#39;</span><span class="p">,</span>
+        <span class="n">grid</span><span class="o">=</span><span class="s1">&#39;1pt25deg&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">resp</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">orchestrate</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+    <span class="n">ds_125</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">datasets</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds_125</span><span class="o">.</span><span class="n">grid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also make it even coarser by regridding to a 2.5°x2.5° grid:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wf</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">AverageByTime</span><span class="p">(</span>
+    <span class="n">ops</span><span class="o">.</span><span class="n">Regrid</span><span class="p">(</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">Subset</span><span class="p">(</span>
+            <span class="n">ops</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;tas&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span>
+            <span class="n">time</span><span class="o">=</span><span class="s1">&#39;2010/2010&#39;</span>
+        <span class="p">),</span>
+        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;conservative&#39;</span><span class="p">,</span>
+        <span class="n">grid</span><span class="o">=</span><span class="s1">&#39;2pt5deg&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">resp</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">orchestrate</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+    <span class="n">ds_25</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">datasets</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds_25</span><span class="o">.</span><span class="n">grid</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-each-dataset-to-look-at-the-coarsened-grids">
+<h3>Plot each dataset to look at the coarsened grids<a class="headerlink" href="#plot-each-dataset-to-look-at-the-coarsened-grids" title="Permalink to this headline">¶</a></h3>
+<p>Make a quick plot first:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ds_og</span><span class="p">,</span> <span class="n">ds_125</span><span class="p">,</span> <span class="n">ds_25</span><span class="p">]:</span>
+    <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;tas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-the-coarsened-datsets-together-using-cartopy">
+<h3>Plot the coarsened datsets together using Cartopy<a class="headerlink" href="#plot-the-coarsened-datsets-together-using-cartopy" title="Permalink to this headline">¶</a></h3>
+<p>Now let’s zoom in on a smaller region, the continental US, to get a clear view of the difference in grid resolution. Here we can also decrease the colorbar limits to better see how the variable <code class="docutils literal notranslate"><span class="pre">tas</span></code> varies within the smaller region.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up the figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># specify the projection</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+
+<span class="c1"># set up plot axes</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+<span class="n">axes_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">]</span>
+
+<span class="c1"># set up colorbar axis</span>
+<span class="n">axcb</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># loop through each dataset and its corresponding axis</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">ds_og</span><span class="p">,</span> <span class="n">ds_125</span><span class="p">,</span> <span class="n">ds_25</span><span class="p">]):</span>
+    <span class="n">plot_ds</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">tas</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">pcm</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">plot_ds</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">plot_ds</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">plot_ds</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">270</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">302.5</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+    
+    <span class="c1"># add borders and coastlines</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+    
+    <span class="c1"># limit to CONUS for this example</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">130</span><span class="p">,</span> <span class="o">-</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">52</span><span class="p">)</span>
+    
+    <span class="c1"># add grid labels on bottom &amp; left only</span>
+    <span class="n">gl</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">top_labels</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">right_labels</span> <span class="o">=</span> <span class="kc">False</span>
+    
+    <span class="c1"># label with the regrid type; if it fails, that means it hasn&#39;t been regridded</span>
+    <span class="c1"># (so label with the grid attribute instead)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">regrid_operation</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+        
+<span class="c1"># use the same colorbar for all plots</span>
+<span class="n">axcb</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">axcb_ins</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">axcb</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;75%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pcm</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">axcb_ins</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{n}</span><span class="s2"> (</span><span class="si">{u}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">plot_ds</span><span class="o">.</span><span class="n">long_name</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="n">plot_ds</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+        
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Rooki</span></code> offers a quick and easy way to regrid CMIP model data that can be located using <code class="docutils literal notranslate"><span class="pre">intake-esgf</span></code>. <code class="docutils literal notranslate"><span class="pre">Cartopy</span></code> lets us easily customize the plot to neatly display the geospatial data.</p>
+</div>
+<div class="section" id="resources-and-references">
+<h2>Resources and references<a class="headerlink" href="#resources-and-references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://climatedataguide.ucar.edu/climate-tools/regridding-overview">Regridding overview from NCAR</a>, including descriptions of various regridding methods</p></li>
+<li><p><a class="reference external" href="https://github.com/roocs/rooki/blob/master/notebooks/demo/demo-rooki-regrid-cmip6.ipynb">Rooki regridding example notebook</a></p></li>
+<li><p><a class="reference external" href="https://rooki.readthedocs.io/en/latest/">Rooki documentation</a></p></li>
+<li><p><a class="reference external" href="https://scitools.org.uk/cartopy/docs/v0.16/gallery/logo.html">Cartopy logo image source</a></p></li>
+<li><p><a class="reference external" href="https://rooki.readthedocs.io/en/latest/#">Rooki logo image source</a></p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="rooki_enso_nonlinear.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Compute Demo: ENSO nonlinearity index with CMIP6 data</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="complex-search2-and-analysis.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Complex Searching with <code class="docutils literal notranslate"><span class="pre">intake</span></code> and analysing employing <code class="docutils literal notranslate"><span class="pre">xarray</span></code></p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By The Jupyter Book community<br/>
+    
+        &copy; Copyright 2023.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
